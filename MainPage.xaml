@@ -8,83 +8,51 @@
     xmlns:model="using:MusicLibraryy.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <!--Grid= is how to give your page structure-->
-    <Grid>
-        <Grid.RowDefinitions>
-            <!--top row-->
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <!--Relative panel. Makes ham button and back button go next to each other-->
-        <RelativePanel>
-            <!--This music button went in first row because we didnt specify where, so by default it'll go in first row-->
-            <!--to make music button drop down we need to create a split view-->
-            <Button Name="MusicButton"
-                    RelativePanel.AlignLeftWithPanel="True"
-                    FontFamily="Segoe MDL2 Assets"
-                    Content="&#xE90B;" Click="MusicButton_Click" />
-            <!--RelativePanel.rightof music button puts back button directly to the right of music button-->
-            <Button Name="BackButton"
-                    RelativePanel.RightOf="MusicButton"
-                    FontFamily="Segoe MDL2 Assets"
-                    Content="&#xE0A6;" Click="BackButton_Click" />
 
-        </RelativePanel>
-        <!--creating splitview and making it compact overlay-->
-            <SplitView Grid.Row="1" Name="MySplitView"
-                       DisplayMode="CompactOverlay"
-                       CompactPaneLength="45"
-                       OpenPaneLength="200"
-                       Margin="0,28,0,0"><!--sets open pane length and compact length(above)-->
-                <!--dont' close split view because ur gonna write more code inside-->
-                <!--need to add PANE and CONTENT-->
-                <SplitView.Pane><!--CREATING PANE AND ADD adding LIST to PANE-->
-                <ListView Name="MenuItemsListView" IsItemClickEnabled="True"
-                              ItemsSource="{x:Bind MenuItems}" ItemClick="MenuItemsListView_ItemClick">
-                    <!--ENABLES ITEMS IN MENU TO BE CLICKED-->
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:MenuItem">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{x:Bind IconFile}" Height="45" Margin="-12,0,0,0" VerticalAlignment="Center"/><!--ICON IMAGES-->
-                                <TextBlock Text="{x:Bind Category}" FontSize="18"   Margin="10,0,0,0" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </SplitView.Pane>
-                <!--SPLIT VIEW CONTENT CREATED BELOW-->
-                <SplitView.Content>
-                    <!--BREAKING UP THE CONTENT AREA INTO A GRID SO WE CAN HAVE MULTIPLE ROWS-->
-                    <Grid Margin="20,40,0,0"><!--adding margin moves "all sounds" over (left, top, right, bottom)-->
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" /><!--Takes up remainder of height that auto doesn't use-->
+
+    <NavigationView Name="NavView" Background="WhiteSmoke">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="HomeNavItem" Content="Home" Tag="home">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE10F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItem Icon="List" Content="Playlist" Tag="apps"/>
+                <NavigationViewItem Icon="Audio" Content="Music" Tag="music"/>
+            </NavigationView.MenuItems>
+
+            <NavigationView.Content>
+                <Grid Margin="100,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                        <!--adding media element to add sounds. doesn't matter where it's placed because it doesn't visibly show in UI-->
-                        <MediaElement Name="MyMediaElement" AutoPlay="True" />
-                        <!--creating "label" textblock that describes what is being shown inside first row-->
-                        <TextBlock Name="CategoryTextBlock" Text="Browse" FontFamily="Tunga" FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Center" />
-                        <!--Gridview makes it so we can hve visible list of items-->
-                        <GridView Grid.Row="1" 
+                    <TextBlock Name="CategoryTextBlock" Text="All Music" TextAlignment="Center" FontSize="24" />
+                    <MediaElement Name="MyMediaElement" AutoPlay="True" />
+                    <GridView Grid.Row="1" 
                                   Name="SoundGridView" 
                                   IsItemClickEnabled="True"
                                   ItemsSource="{x:Bind Sounds}"
                                   ItemClick="SoundGridView_ItemClick"
-                                  ><!--this grid is now bound to SOUNDS and displays sounds collection-->
+                                  >
                         <GridView.ItemTemplate>
-                            <!--template for each item you add in the grid view-->
                             <DataTemplate x:DataType="model:Sound">
-                                <!--each datatemplate should contain an img. each data template is about each sound-->
-                                <Image Name="MyImage" Height="112" Width="101" Source="{x:Bind ImageFile}" />
+                                <Image Name="MyImage" Height="400" Width="400" Stretch="Fill" Source= "{x:Bind ImageFile}" />
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
-                    </Grid>
-                </SplitView.Content>
-            </SplitView>
+                </Grid>
+            </NavigationView.Content>
 
-        
+            <!--<NavigationView.PaneFooter>
+            <MediaElement Name="MyMediaElement"></MediaElement>
+        </NavigationView.PaneFooter>-->
+        </NavigationView>
 
-    </Grid>
-</Page>
+
+
+    </Page>
+

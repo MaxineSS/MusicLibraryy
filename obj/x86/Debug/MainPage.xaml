@@ -8,84 +8,52 @@
     xmlns:model="using:MusicLibraryy.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <!--Grid= is how to give your page structure-->
-    <Grid>
-        <Grid.RowDefinitions>
-            <!--top row-->
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <!--Relative panel. Makes ham button and back button go next to each other-->
-        <RelativePanel>
-            <!--This music button went in first row because we didnt specify where, so by default it'll go in first row-->
-            <!--to make music button drop down we need to create a split view-->
-            <Button x:ConnectionId='13' Name="MusicButton"
-                    RelativePanel.AlignLeftWithPanel="True"
-                    FontFamily="Segoe MDL2 Assets"
-                    Content="&#xE90B;"                           />
-            <!--RelativePanel.rightof music button puts back button directly to the right of music button-->
-            <Button x:ConnectionId='14' Name="BackButton"
-                    RelativePanel.RightOf="MusicButton"
-                    FontFamily="Segoe MDL2 Assets"
-                    Content="&#xE0A6;"                          />
 
-        </RelativePanel>
-        <!--creating splitview and making it compact overlay-->
-            <SplitView x:ConnectionId='2' Grid.Row="1" Name="MySplitView"
-                       DisplayMode="CompactOverlay"
-                       CompactPaneLength="45"
-                       OpenPaneLength="200"
-                       Margin="0,28,0,0"><!--sets open pane length and compact length(above)-->
-                <!--dont' close split view because ur gonna write more code inside-->
-                <!--need to add PANE and CONTENT-->
-                <SplitView.Pane><!--CREATING PANE AND ADD adding LIST to PANE-->
-                <ListView x:ConnectionId='3' Name="MenuItemsListView" IsItemClickEnabled="True"
-                                                                                                      >
-                    <!--ENABLES ITEMS IN MENU TO BE CLICKED-->
-                    <ListView.ItemTemplate>
-                        <DataTemplate                            >
-                            <StackPanel x:ConnectionId='5' Orientation="Horizontal">
-                                <Image x:ConnectionId='6'                            Height="45" Margin="-12,0,0,0" VerticalAlignment="Center"/><!--ICON IMAGES-->
-                                <TextBlock x:ConnectionId='7'                          FontSize="18"   Margin="10,0,0,0" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </SplitView.Pane>
-                <!--SPLIT VIEW CONTENT CREATED BELOW-->
-                <SplitView.Content>
-                    <!--BREAKING UP THE CONTENT AREA INTO A GRID SO WE CAN HAVE MULTIPLE ROWS-->
-                    <Grid Margin="20,40,0,0"><!--adding margin moves "all sounds" over (left, top, right, bottom)-->
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" /><!--Takes up remainder of height that auto doesn't use-->
+
+    <NavigationView x:ConnectionId='2' Name="NavView" Background="WhiteSmoke">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="HomeNavItem" Content="Home" Tag="home">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE10F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItem Icon="List" Content="Playlist" Tag="apps"/>
+                <NavigationViewItem Icon="Audio" Content="Music" Tag="music"/>
+            </NavigationView.MenuItems>
+
+            <NavigationView.Content>
+                <Grid Margin="100,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                        <!--adding media element to add sounds. doesn't matter where it's placed because it doesn't visibly show in UI-->
-                        <MediaElement x:ConnectionId='8' Name="MyMediaElement" AutoPlay="True" />
-                        <!--creating "label" textblock that describes what is being shown inside first row-->
-                        <TextBlock x:ConnectionId='9' Name="CategoryTextBlock" Text="Browse" FontFamily="Tunga" FontSize="50" FontWeight="SemiBold" HorizontalAlignment="Center" />
-                        <!--Gridview makes it so we can hve visible list of items-->
-                        <GridView x:ConnectionId='10' Grid.Row="1" 
+                    <TextBlock x:ConnectionId='3' Name="CategoryTextBlock" Text="All Music" TextAlignment="Center" FontSize="24" />
+                    <MediaElement x:ConnectionId='4' Name="MyMediaElement" AutoPlay="True" />
+                    <GridView x:ConnectionId='5' Grid.Row="1" 
                                   Name="SoundGridView" 
                                   IsItemClickEnabled="True"
                                                                
                                                                      
-                                  ><!--this grid is now bound to SOUNDS and displays sounds collection-->
+                                  >
                         <GridView.ItemTemplate>
-                            <!--template for each item you add in the grid view-->
                             <DataTemplate                         >
-                                <!--each datatemplate should contain an img. each data template is about each sound-->
-                                <Image x:ConnectionId='12' Name="MyImage" Height="112" Width="101"                             />
+                                <Image x:ConnectionId='7' Name="MyImage" Height="400" Width="400" Stretch="Fill"                              />
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
-                    </Grid>
-                </SplitView.Content>
-            </SplitView>
+                </Grid>
+            </NavigationView.Content>
 
-        
+            <!--<NavigationView.PaneFooter>
+            <MediaElement Name="MyMediaElement"></MediaElement>
+        </NavigationView.PaneFooter>-->
+        </NavigationView>
 
-    </Grid>
-</Page>
+
+
+    </Page>
+
 
